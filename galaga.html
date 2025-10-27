@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Sytle.css">
+    <title>Galaga - Juego Clásico</title>
+</head>
+<body>
+    <div class="game-container">
+        <h1>G A L A G A</h1>
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+        <div class="info-panel">
+            <div>PUNTUACIÓN: <span id="score">0</span></div>
+            <div>VIDAS: <span id="lives">3</span></div>
+            <div>NIVEL: <span id="level">1</span></div>
+        </div>
+        <div class="controls">
+            Controles: ← → para mover | ESPACIO para disparar | R para reiniciar
+        </div>
+        <div id="gameOverText" class="game-over"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

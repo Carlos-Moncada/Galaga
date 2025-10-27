@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vista Previa de Sprites Recortados</title>
+    <style>
+        body {
+            background: #1a1a1a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        .sprite-group {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            background: #000;
+        }
+        .sprite-group h2 {
+            color: #ffff00;
+            margin-bottom: 15px;
+        }
+        .frames-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .frame {
+            text-align: center;
+            padding: 10px;
+            background: #2a2a2a;
+            border-radius: 5px;
+        }
+        .frame img {
+            image-rendering: pixelated;
+            background: repeating-conic-gradient(#808080 0% 25%, #a0a0a0 0% 50%) 50% / 20px 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .frame p {
+            margin: 10px 0 0 0;
+            font-size: 12px;
+        }
+        .info {
+            background: #1a3a1a;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .zoom {
+            transform: scale(2);
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 SPRITES RECORTADOS - GALAGA</h1>
+    
+    <div class="info">
+        <h3>ℹ️ Información</h3>
+        <p>Todos los sprites han sido recortados en frames individuales.</p>
+        <p>Los sprites están optimizados y listos para usar en el juego.</p>
+    </div>
+
+    <div class="sprite-group">
+        <h2>🚀 Jugador (Player) - 2 frames</h2>
+        <p>Dimensiones: 33x42 pixels cada frame</p>
+        <div class="frames-container">
+            <div class="frame">
+                <img src="player_frame_0.png" alt="Player Frame 0" class="zoom">
+                <p>Frame 0</p>
+            </div>
+            <div class="frame">
+                <img src="player_frame_1.png" alt="Player Frame 1" class="zoom">
+                <p>Frame 1</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sprite-group">
+        <h2>🦋 Enemy Butterfly - 2 frames</h2>
+        <p>Dimensiones: 33x33 pixels cada frame</p>
+        <div class="frames-container">
+            <div class="frame">
+                <img src="enemy_frame_0.png" alt="Enemy Frame 0" class="zoom">
+                <p>Frame 0</p>
+            </div>
+            <div class="frame">
+                <img src="enemy_frame_1.png" alt="Enemy Frame 1" class="zoom">
+                <p>Frame 1</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sprite-group">
+        <h2>🐞 Ladybug - 2 frames</h2>
+        <p>Dimensiones: 33x33 pixels cada frame</p>
+        <div class="frames-container">
+            <div class="frame">
+                <img src="ladybug_frame_0.png" alt="Ladybug Frame 0" class="zoom">
+                <p>Frame 0</p>
+            </div>
+            <div class="frame">
+                <img src="ladybug_frame_1.png" alt="Ladybug Frame 1" class="zoom">
+                <p>Frame 1</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sprite-group">
+        <h2>👑 King Galaspark - 5 frames</h2>
+        <p>Dimensiones: 64x64 pixels cada frame</p>
+        <div class="frames-container">
+            <div class="frame">
+                <img src="king_frame_0.png" alt="King Frame 0" class="zoom">
+                <p>Frame 0</p>
+            </div>
+            <div class="frame">
+                <img src="king_frame_1.png" alt="King Frame 1" class="zoom">
+                <p>Frame 1</p>
+            </div>
+            <div class="frame">
+                <img src="king_frame_2.png" alt="King Frame 2" class="zoom">
+                <p>Frame 2</p>
+            </div>
+            <div class="frame">
+                <img src="king_frame_3.png" alt="King Frame 3" class="zoom">
+                <p>Frame 3</p>
+            </div>
+            <div class="frame">
+                <img src="king_frame_4.png" alt="King Frame 4" class="zoom">
+                <p>Frame 4</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sprite-group">
+        <h2>💥 Explosión Enemigo - 5 frames</h2>
+        <p>Dimensiones: 101x102 pixels cada frame</p>
+        <div class="frames-container">
+            <div class="frame">
+                <img src="explosion_enemy_frame_0.png" alt="Explosion Enemy 0">
+                <p>Frame 0</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_enemy_frame_1.png" alt="Explosion Enemy 1">
+                <p>Frame 1</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_enemy_frame_2.png" alt="Explosion Enemy 2">
+                <p>Frame 2</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_enemy_frame_3.png" alt="Explosion Enemy 3">
+                <p>Frame 3</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_enemy_frame_4.png" alt="Explosion Enemy 4">
+                <p>Frame 4</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="sprite-group">
+        <h2>💥 Explosión Jugador - 4 frames</h2>
+        <p>Dimensiones: 101x100 pixels cada frame</p>
+        <div class="frames-container">
+            <div class="frame">
+                <img src="explosion_player_frame_0.png" alt="Explosion Player 0">
+                <p>Frame 0</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_player_frame_1.png" alt="Explosion Player 1">
+                <p>Frame 1</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_player_frame_2.png" alt="Explosion Player 2">
+                <p>Frame 2</p>
+            </div>
+            <div class="frame">
+                <img src="explosion_player_frame_3.png" alt="Explosion Player 3">
+                <p>Frame 3</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="info">
+        <h3>📋 Resumen</h3>
+        <ul>
+            <li>✅ Player: 2 frames (33x42px)</li>
+            <li>✅ Butterfly: 2 frames (33x33px)</li>
+            <li>✅ Ladybug: 2 frames (33x33px)</li>
+            <li>✅ King: 5 frames (64x64px)</li>
+            <li>✅ Explosión Enemigo: 5 frames (101x102px)</li>
+            <li>✅ Explosión Jugador: 4 frames (101x100px)</li>
+        </ul>
+        <p><strong>Total: 20 sprites individuales</strong></p>
+    </div>
+</body>
+</html>
