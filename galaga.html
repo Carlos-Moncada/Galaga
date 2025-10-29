@@ -8,17 +8,76 @@
 </head>
 <body>
     <div class="game-container">
-        <h1>G A L A G A</h1>
-        <canvas id="gameCanvas" width="800" height="600"></canvas>
-        <div class="info-panel">
-            <div>PUNTUACIÓN: <span id="score">0</span></div>
-            <div>VIDAS: <span id="lives">3</span></div>
-            <div>NIVEL: <span id="level">1</span></div>
+        <!-- Menu Screen -->
+        <div id="menuScreen" class="menu-screen">
+            <div class="menu-content">
+                <div class="high-score-display">
+                    <span class="label-1up">1UP</span>
+                    <span class="score-1up" id="player1Score">00</span>
+                    <span class="label-hiscore">HI-SCORE</span>
+                    <span class="score-hiscore" id="highScore">30000</span>
+                    <span class="label-2up">2UP</span>
+                    <span class="score-2up">00</span>
+                </div>
+
+                <div class="title-logo">
+                    <h1>G A L A G A</h1>
+                </div>
+
+                <div class="menu-options">
+                    <div class="menu-option selected" id="option1Player">
+                        <span class="selector">▶</span> 1 PLAYER
+                    </div>
+                    <div class="menu-option" id="option2Players">
+                        <span class="selector"></span> 2 PLAYERS
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <p>TM AND © 1981 1988 NAMCO LTD.</p>
+                    <p>BANDAI CO. LTD. IS</p>
+                    <p>LICENSED BY NINTENDO</p>
+                </div>
+
+                <div class="start-prompt">
+                    PRESS SPACE TO START
+                </div>
+            </div>
         </div>
-        <div class="controls">
-            Controles: ← → para mover | ESPACIO para disparar | R para reiniciar
+
+        <!-- Game Screen -->
+        <div id="gameScreen" class="game-screen" style="display: none;">
+            <div class="game-layout">
+                <!-- Main game area -->
+                <div class="game-area">
+                    <canvas id="gameCanvas" width="650" height="700"></canvas>
+                    <div id="gameOverText" class="game-over"></div>
+                </div>
+
+                <!-- Right side panel -->
+                <div class="side-panel">
+                    <div class="hud-section">
+                        <div class="hud-label">HIGH</div>
+                        <div class="hud-label">SCORE</div>
+                        <div class="hud-value" id="highScoreGame">30000</div>
+                    </div>
+
+                    <div class="hud-section" style="margin-top: 60px;">
+                        <div class="hud-label-small">1UP</div>
+                        <div class="hud-value" id="score">160</div>
+                    </div>
+
+                    <div class="player-lives">
+                        <div id="livesDisplay"></div>
+                    </div>
+
+                    <div class="stage-indicator">
+                        <div class="stage-label">STAGE</div>
+                        <div class="stage-number" id="level">1</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="gameOverText" class="game-over"></div>
     </div>
     <script src="script.js"></script>
 </body>
