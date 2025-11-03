@@ -12,10 +12,10 @@ const images = {
     enemy: new Image(),
     ladybug: new Image(),
     king: new Image(),
-    bossBlue: new Image(),
-    bossRed: new Image(),
-    bossPurple: new Image(),
-    bossMulticolor: new Image(),
+    bossBlue: [],
+    bossRed: [],
+    bossPurple: [],
+    bossMulticolor: [],
     background: new Image(),
     explosionEnemy: [],
     explosionPlayer: []
@@ -26,11 +26,28 @@ images.player.src = 'galaga_sprites_transparent/player.png';
 images.enemy.src = 'galaga_sprites_transparent/boss_red_frame_00.png';
 images.ladybug.src = 'galaga_sprites_transparent/boss_purple_frame_00.png';
 images.king.src = 'galaga_sprites_transparent/boss_multicolor_frame_00.png';
-images.bossBlue.src = 'galaga_sprites_transparent/boss_blue_frame_00.png';
-images.bossRed.src = 'galaga_sprites_transparent/boss_red_frame_00.png';
-images.bossPurple.src = 'galaga_sprites_transparent/boss_purple_frame_00.png';
-images.bossMulticolor.src = 'galaga_sprites_transparent/boss_multicolor_frame_00.png';
 images.background.src = 'galaga_sprites_transparent/Arcade - Galaga Arrangement - Backgrounds - Level Backgrounds.png';
+
+// Load animation frames for boss variants (8 frames each: 00-07)
+for (let i = 0; i < 8; i++) {
+    const frameNum = i.toString().padStart(2, '0');
+
+    const blueFrame = new Image();
+    blueFrame.src = `galaga_sprites_transparent/boss_blue_frame_${frameNum}.png`;
+    images.bossBlue.push(blueFrame);
+
+    const redFrame = new Image();
+    redFrame.src = `galaga_sprites_transparent/boss_red_frame_${frameNum}.png`;
+    images.bossRed.push(redFrame);
+
+    const purpleFrame = new Image();
+    purpleFrame.src = `galaga_sprites_transparent/boss_purple_frame_${frameNum}.png`;
+    images.bossPurple.push(purpleFrame);
+
+    const multicolorFrame = new Image();
+    multicolorFrame.src = `galaga_sprites_transparent/boss_multicolor_frame_${frameNum}.png`;
+    images.bossMulticolor.push(multicolorFrame);
+}
 
 // Load explosion frames
 for (let i = 0; i < 5; i++) {
@@ -45,15 +62,54 @@ for (let i = 0; i < 4; i++) {
 }
 
 let imagesLoaded = 0;
-const totalImages = 9 + 5 + 4; // 9 sprites + 5 enemy explosion frames + 4 player explosion frames
+const totalImages = 5 + (8 * 4) + 5 + 4; // 5 single sprites + 32 boss frames + 5 enemy explosion + 4 player explosion = 46
 let gameStarted = false;
 
 // Cargar imágenes antes de iniciar
-const singleImages = [images.player, images.enemy, images.ladybug, images.king,
-                      images.bossBlue, images.bossRed, images.bossPurple,
-                      images.bossMulticolor, images.background];
+const singleImages = [images.player, images.enemy, images.ladybug, images.king, images.background];
 
 singleImages.forEach(img => {
+    img.onload = () => {
+        imagesLoaded++;
+        updateLoadingStatus();
+    };
+    img.onerror = () => {
+        console.error('Failed to load image:', img.src);
+    };
+});
+
+// Load boss animation frames
+images.bossBlue.forEach(img => {
+    img.onload = () => {
+        imagesLoaded++;
+        updateLoadingStatus();
+    };
+    img.onerror = () => {
+        console.error('Failed to load image:', img.src);
+    };
+});
+
+images.bossRed.forEach(img => {
+    img.onload = () => {
+        imagesLoaded++;
+        updateLoadingStatus();
+    };
+    img.onerror = () => {
+        console.error('Failed to load image:', img.src);
+    };
+});
+
+images.bossPurple.forEach(img => {
+    img.onload = () => {
+        imagesLoaded++;
+        updateLoadingStatus();
+    };
+    img.onerror = () => {
+        console.error('Failed to load image:', img.src);
+    };
+});
+
+images.bossMulticolor.forEach(img => {
     img.onload = () => {
         imagesLoaded++;
         updateLoadingStatus();
@@ -91,6 +147,10 @@ function updateLoadingStatus() {
         } else {
             startPrompt.textContent = 'PRESS SPACE TO START';
             console.log('All images loaded. Menu ready.');
+            console.log('Boss Blue frames loaded:', images.bossBlue.length);
+            console.log('Boss Red frames loaded:', images.bossRed.length);
+            console.log('Boss Purple frames loaded:', images.bossPurple.length);
+            console.log('Boss Multicolor frames loaded:', images.bossMulticolor.length);
         }
     }
 }
@@ -351,7 +411,8 @@ class Enemy {
             this.height = 45;
             this.frameWidth = 33;
             this.frameHeight = 33;
-            this.totalFrames = 2;
+            this.totalFrames = 1;
+            this.animationSpeed = 8;
             this.diveChance = 0.15; // 15% chance cuando el timer expira
             this.points = 80;
         } else if (type === 2) { // Ladybug
@@ -359,7 +420,8 @@ class Enemy {
             this.height = 40;
             this.frameWidth = 33;
             this.frameHeight = 33;
-            this.totalFrames = 2;
+            this.totalFrames = 1;
+            this.animationSpeed = 8;
             this.diveChance = 0.20; // 20% chance cuando el timer expira
             this.points = 50;
         } else if (type === 3) { // King
@@ -367,7 +429,8 @@ class Enemy {
             this.height = 50;
             this.frameWidth = 64;
             this.frameHeight = 64;
-            this.totalFrames = 5;
+            this.totalFrames = 1;
+            this.animationSpeed = 8;
             this.diveChance = 0.10; // 10% chance (más cauteloso)
             this.points = 150;
         } else if (type >= 4) { // Boss variants
@@ -375,7 +438,8 @@ class Enemy {
             this.height = 55;
             this.frameWidth = 32;
             this.frameHeight = 32;
-            this.totalFrames = 1;
+            this.totalFrames = 8; // 8 animation frames (00-07)
+            this.animationSpeed = 6; // Speed of animation cycling
             this.diveChance = 0.08; // 8% chance (muy cauteloso)
             this.points = 200 + (type - 4) * 50; // 200-350 puntos
         }
@@ -392,34 +456,62 @@ class Enemy {
         } else if (this.type === 3) {
             img = images.king;
         } else if (this.type >= 4) {
-            // Boss variants
+            // Boss variants with animation
+            let frames;
             if (this.variant === 'blue') {
-                img = images.bossBlue;
+                frames = images.bossBlue;
             } else if (this.variant === 'red') {
-                img = images.bossRed;
+                frames = images.bossRed;
             } else if (this.variant === 'purple') {
-                img = images.bossPurple;
+                frames = images.bossPurple;
             } else {
-                img = images.bossMulticolor;
+                frames = images.bossMulticolor;
+            }
+
+            // Get current animation frame
+            if (frames && frames.length > 0 && frames[this.animationFrame]) {
+                img = frames[this.animationFrame];
+            } else {
+                // Fallback to first frame if animation frame is invalid
+                if (frames && frames.length > 0) {
+                    img = frames[0];
+                }
             }
         }
 
-        if (img && img.complete) {
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.rotate(Math.PI / 2); // Rotate 90 degrees clockwise
-            ctx.drawImage(
-                img,
-                -this.width / 2,
-                -this.height / 2,
-                this.width,
-                this.height
-            );
-            ctx.restore();
+        if (img) {
+            if (img.complete) {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(Math.PI / 2); // Rotate 90 degrees clockwise
+                ctx.drawImage(
+                    img,
+                    -this.width / 2,
+                    -this.height / 2,
+                    this.width,
+                    this.height
+                );
+                ctx.restore();
+            }
+        } else if (this.type >= 4) {
+            // Debug: draw a colored circle if image not available
+            ctx.fillStyle = this.variant === 'blue' ? '#0000ff' :
+                           this.variant === 'red' ? '#ff0000' :
+                           this.variant === 'purple' ? '#ff00ff' : '#ffff00';
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.width / 2, 0, Math.PI * 2);
+            ctx.fill();
         }
     }
 
     update() {
+        // Update animation frame
+        this.animationCounter++;
+        if (this.animationCounter >= this.animationSpeed) {
+            this.animationCounter = 0;
+            this.animationFrame = (this.animationFrame + 1) % this.totalFrames;
+        }
+
         if (this.state === 'formation') {
             // Movimiento en formación
             this.x += this.speedX;
@@ -592,6 +684,13 @@ function createEnemies() {
     enemies = [];
     const bossVariants = ['blue', 'red', 'purple', 'multicolor'];
 
+    console.log('=== Creating Enemies ===');
+    console.log('Boss frames available:');
+    console.log('  Blue:', images.bossBlue.length);
+    console.log('  Red:', images.bossRed.length);
+    console.log('  Purple:', images.bossPurple.length);
+    console.log('  Multicolor:', images.bossMulticolor.length);
+
     // Elegir un patrón de formación aleatorio
     const formations = [
         'classic',      // Filas rectas clásicas
@@ -678,7 +777,8 @@ function createClassicFormation(count, bossVariants) {
             let type = row === 0 ? 3 : (row <= 2 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            // Show boss variants with animation from level 1
+            if (type === 3) {
                 type = 4 + (col % 4);
                 variant = bossVariants[col % 4];
             }
@@ -707,7 +807,7 @@ function createVFormation(count, bossVariants) {
             const type = row < 2 ? 3 : (Math.random() > 0.5 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -740,7 +840,7 @@ function createDiamondFormation(count, bossVariants) {
             const type = layer === 0 ? 3 : (Math.random() > 0.5 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -763,7 +863,7 @@ function createWaveFormation(count, bossVariants) {
             const type = row < 2 ? 3 : (col % 2 === 0 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[col % 4];
             }
 
@@ -810,7 +910,7 @@ function createScatteredFormation(count, bossVariants) {
         const type = Math.random() > 0.7 ? 3 : (Math.random() > 0.5 ? 1 : 2);
         let variant = null;
 
-        if (type === 3 && level >= 3) {
+        if (type === 3) {
             variant = bossVariants[i % 4];
         }
 
@@ -836,7 +936,7 @@ function createCircleFormation(count, bossVariants) {
             const type = circle === 0 ? 3 : (circle === 1 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -859,7 +959,7 @@ function createArrowFormation(count, bossVariants) {
             const type = row < 2 ? 3 : (Math.random() > 0.5 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -890,7 +990,7 @@ function createCrossFormation(count, bossVariants) {
             const type = i <= 2 ? 3 : (Math.random() > 0.5 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[arm % 4];
             }
 
@@ -920,7 +1020,7 @@ function createSpiralFormation(count, bossVariants) {
         const type = i < 5 ? 3 : (i % 2 === 0 ? 1 : 2);
         let variant = null;
 
-        if (type === 3 && level >= 3) {
+        if (type === 3) {
             variant = bossVariants[i % 4];
         }
 
@@ -943,7 +1043,7 @@ function createZigzagFormation(count, bossVariants) {
             const type = row < 2 ? 3 : (col % 2 === 0 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[col % 4];
             }
 
@@ -976,7 +1076,7 @@ function createHeartFormation(count, bossVariants) {
         const type = i < 8 ? 3 : (i % 2 === 0 ? 1 : 2);
         let variant = null;
 
-        if (type === 3 && level >= 3) {
+        if (type === 3) {
             variant = bossVariants[i % 4];
         }
 
@@ -998,7 +1098,7 @@ function createPyramidFormation(count, bossVariants) {
             const type = row === 0 ? 3 : (row <= 2 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -1035,7 +1135,7 @@ function createWingsFormation(count, bossVariants) {
             const type = layer === 0 ? 3 : (i % 2 === 0 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -1059,7 +1159,7 @@ function createWingsFormation(count, bossVariants) {
             const type = layer === 0 ? 3 : (i % 2 === 0 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -1096,7 +1196,7 @@ function createHourglassFormation(count, bossVariants) {
             const type = row === midPoint ? 3 : (Math.random() > 0.5 ? 1 : 2);
             let variant = null;
 
-            if (type === 3 && level >= 3) {
+            if (type === 3) {
                 variant = bossVariants[i % 4];
             }
 
@@ -1117,7 +1217,7 @@ function createHexagonFormation(count, bossVariants) {
 
         if (layer === 0) {
             // Center enemy
-            enemies.push(new Enemy(centerX, centerY, 3, level >= 3 ? bossVariants[0] : null));
+            enemies.push(new Enemy(centerX, centerY, 4, bossVariants[0]));
         } else {
             for (let i = 0; i < enemiesInLayer; i++) {
                 const angle = (Math.PI * 2 * i) / enemiesInLayer;
@@ -1131,7 +1231,7 @@ function createHexagonFormation(count, bossVariants) {
                 const type = layer === 1 ? 3 : (i % 2 === 0 ? 1 : 2);
                 let variant = null;
 
-                if (type === 3 && level >= 3) {
+                if (type === 3) {
                     variant = bossVariants[i % 4];
                 }
 
